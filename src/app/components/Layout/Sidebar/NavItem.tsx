@@ -15,8 +15,7 @@ const NavItem = ({ label, icon, active, onClick, indent }: TNavItemProps) => (
 		onClick={onClick}
 		gap={3}
 		align="center"
-		px={4}
-		py={2}
+		p={3}
 		width="100%"
 		borderLeftWidth={active ? '3px' : 0}
 		borderLeftColor={active ? 'blue.500' : 'transparent'}
@@ -24,15 +23,20 @@ const NavItem = ({ label, icon, active, onClick, indent }: TNavItemProps) => (
 		_hover={{ bg: active ? 'var(--color-brandNeutralLight)' : 'gray.50' }}
 	>
 		<Box
-			color="var(--color-foreground)"
-			ml={indent ? 4 : 0}
+			color="{colors.base800}"
+			w="1.0625rem"
+			h="1.0625rem"
+			display="flex"
+			_icon={{ w: 'inherit', h: 'inherit' }}
+			alignItems="center"
+			justifyContent="center"
 		>
 			{icon}
 		</Box>
 		<Text
 			fontSize="md"
 			fontWeight="medium"
-			className={active ? 'text-brandSecondary' : 'text-brandNeutralGrey'}
+			color={active ? '{colors.brandSecondary}' : '{colors.brandNeutralGrey}'}
 		>
 			{label}
 		</Text>

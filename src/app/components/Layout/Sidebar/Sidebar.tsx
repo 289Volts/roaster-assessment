@@ -7,7 +7,8 @@ import SidebarSection from './SidebarSection';
 const Sidebar = () => (
 	<Box
 		as="aside"
-		width="260px"
+		paddingTop="6"
+		maxWidth="260px"
 		borderRightWidth="1px"
 		borderRightColor="gray.100"
 		height="100vh"
@@ -15,7 +16,7 @@ const Sidebar = () => (
 	>
 		<VStack
 			align="stretch"
-			gap={1}
+			gap="2.3125rem"
 			height="100%"
 		>
 			<SidebarHeader />
