@@ -5,9 +5,12 @@ const config = defineConfig({
 		tokens: {
 			colors: {
 				brandNeutralLight: { value: '#f0f5fa' },
+				brandNeutralOutline: { value: '#D9E5F2' },
 				brandNeutralGrey: { value: '#4e5d69' },
 				brandSecondary: { value: '#5653fc' },
+				brandPrimary: { value: '#009FE3' },
 				brandBlack: { value: '#242424' },
+				btnBg: { value: '#F6FAFD' },
 				base800: { value: '#2D3648' }
 			}
 		}

@@ -1,7 +1,7 @@
 import { Provider } from '@/app/components/ui/provider';
 import { Grid, GridItem } from '@chakra-ui/react';
 import { ReactNode } from 'react';
-import Header from './Header/Header';
+import { Header } from './Header';
 import { Sidebar } from './Sidebar';
 
 const Layout = ({ children }: { children: ReactNode }) => {

@@ -1,18 +1,10 @@
 :root {
-	--background: #ffffff;
+	--background: #ededed;
 	--foreground: #171717;
 	--font-sans: 'Manrope', sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		--background: #0a0a0a;
-		--foreground: #ededed;
-	}
-}
-
 body {
-	/* background: var(--background); */
 	color: var(--foreground);
 	font-family: var(--font-sans);
 }

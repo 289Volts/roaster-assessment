@@ -1,7 +1,7 @@
 import { ICON_LOOKUP } from '@/lib/constants';
 import { Box, VStack } from '@chakra-ui/react';
-import SidebarHeader from './Header';
 import NavItem from './NavItem';
+import SidebarHeader from './SidebarHeader';
 import SidebarSection from './SidebarSection';
 
 const Sidebar = () => (
@@ -10,7 +10,7 @@ const Sidebar = () => (
 		paddingTop="6"
 		maxWidth="16.31rem"
 		borderRightWidth="1px"
-		borderRightColor="gray.100"
+		borderRightColor="{colors.brandNeutralOutline}"
 		height="100vh"
 		bg="transparent"
 	>
