@@ -1,7 +1,6 @@
 import { TEvent, TRoom, TTimeSlot } from './types';
 
 export const PLANNER_ROOMS: TRoom[] = [
-	{ id: 'days', name: 'Days', headerBg: 'blue.50' },
 	{ id: 'room1', name: 'Behandelingkamer1', headerBg: 'green.50' },
 	{ id: 'management', name: 'Management', headerBg: 'gray.50' },
 	{ id: 'misc', name: 'Bijzonderheden-Verlof-Cursus-', headerBg: 'yellow.50' },

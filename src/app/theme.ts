@@ -17,7 +17,10 @@ const config = defineConfig({
 				brandErrorBorder: { value: '#FF6669' },
 				brandError: { value: '#FF383C' },
 				brandErrorLight: { value: '#FFF5F5' },
-				brandToggleText: { value: '#7E919F' }
+				brandToggleText: { value: '#7E919F' },
+				brandGrey: { value: '#5D636F' },
+				brandMainBorder: { value: '#E2E4E9' },
+				brandSurfaceLight: { value: '#F3F5F7' }
 			}
 		}
 	}
