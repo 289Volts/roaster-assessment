@@ -8,10 +8,16 @@ const config = defineConfig({
 				brandNeutralOutline: { value: '#D9E5F2' },
 				brandNeutralGrey: { value: '#4e5d69' },
 				brandSecondary: { value: '#5653fc' },
+				brandSecondaryBorder: { value: '#BAB9FE' },
+				brandSecondaryLight: { value: '#F0F0FF' },
 				brandPrimary: { value: '#009FE3' },
 				brandBlack: { value: '#242424' },
 				btnBg: { value: '#F6FAFD' },
-				base800: { value: '#2D3648' }
+				base800: { value: '#2D3648' },
+				brandErrorBorder: { value: '#FF6669' },
+				brandError: { value: '#FF383C' },
+				brandErrorLight: { value: '#FFF5F5' },
+				brandToggleText: { value: '#7E919F' }
 			}
 		}
 	}

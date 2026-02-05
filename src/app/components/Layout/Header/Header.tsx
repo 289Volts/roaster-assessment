@@ -10,7 +10,6 @@ const Header = () => {
 			justify="end"
 			gapX="4.5"
 			p="6"
-			borderBottom="1px solid {colors.brandNeutralOutline}"
 		>
 			<HStack gap="4.5">
 				<IconButton

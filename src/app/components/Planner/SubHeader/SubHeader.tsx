@@ -68,7 +68,7 @@ export const SubHeader = () => {
 					</ButtonGroup>
 				</Box>
 
-				<Text fontSize="xs">Description of the live</Text>
+				<Text fontSize="xs">Description of the {view}</Text>
 			</HStack>
 		</Box>
 	);
