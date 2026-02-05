@@ -1,5 +1,5 @@
 import { HStack, IconButton } from '@chakra-ui/react';
-import logo from '@root/public/logo.png';
+import logo from '@root/public/assets/icons/logo.png';
 import { HamburgerMenu } from 'iconsax-reactjs';
 import Image from 'next/image';
 

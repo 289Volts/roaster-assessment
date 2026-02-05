@@ -30,8 +30,9 @@ const NavItem = ({ label, icon, active, onClick, indent }: TNavItemProps) => (
 			{icon}
 		</Box>
 		<Text
-			fontSize="sm"
-			color={active ? 'blue.600' : 'gray.700'}
+			fontSize="md"
+			fontWeight="medium"
+			className={active ? 'text-brandSecondary' : 'text-brandNeutralGrey'}
 		>
 			{label}
 		</Text>
