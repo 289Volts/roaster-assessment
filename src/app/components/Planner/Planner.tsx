@@ -1,4 +1,4 @@
-import { Box, Button, Flex, HStack, Stack, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Flex, HStack, ScrollArea, Stack, Text, VStack } from '@chakra-ui/react';
 import { LuChevronDown, LuPlus } from 'react-icons/lu';
 import { CalendarGrid } from './CalendarGrid';
 import { DateNavigation } from './DateNavigation';
@@ -78,22 +78,37 @@ export const Planner = () => {
 					align="start"
 				>
 					<Roster />
-					<VStack
-						gap={5}
-						w="full"
+					<ScrollArea.Root
+						height="calc(100vh - 100px)"
+						mt={5}
 					>
-						<DateNavigation />
+						<ScrollArea.Viewport>
+							<ScrollArea.Content textStyle="sm">
+								<VStack
+									gap={4}
+									align="stretch"
+								>
+									<VStack
+										gap={5}
+										w="full"
+									>
+										<DateNavigation />
 
-						{/* Content */}
-						<Box
-							flex={1}
-							borderBottomRightRadius="0"
-							borderBottomLeftRadius="0"
-							w="full"
-						>
-							<CalendarGrid />
-						</Box>
-					</VStack>
+										{/* Content */}
+										<Box
+											flex={1}
+											borderBottomRightRadius="0"
+											borderBottomLeftRadius="0"
+											w="full"
+										>
+											<CalendarGrid />
+										</Box>
+									</VStack>
+								</VStack>
+							</ScrollArea.Content>
+						</ScrollArea.Viewport>
+						<ScrollArea.Scrollbar />
+					</ScrollArea.Root>
 				</HStack>
 			</VStack>
 		</Stack>
