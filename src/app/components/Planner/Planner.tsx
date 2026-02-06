@@ -65,6 +65,7 @@ export const Planner = () => {
 				w="full"
 				align="start"
 				flex="1"
+				pb={4}
 			>
 				<SubHeader />
 
@@ -76,6 +77,7 @@ export const Planner = () => {
 					flex={1}
 					borderBottomRightRadius="0"
 					borderBottomLeftRadius="0"
+					w="full"
 				>
 					<CalendarGrid />
 				</Box>

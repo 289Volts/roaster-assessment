@@ -21,7 +21,7 @@ export const PLANNER_EVENTS: TEvent[] = [
 		id: '1',
 		title: 'Surgery',
 		startTime: '11:00',
-		endTime: '13:00',
+		endTime: '13:30',
 		assignee: 'Haico de Gast',
 		initials: 'HG',
 		type: 'surgery',

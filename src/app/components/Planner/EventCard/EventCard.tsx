@@ -24,6 +24,7 @@ export const EventCard = ({ title, timeRange, assignee, initials, color }: Event
 			_hover={{ shadow: 'md' }}
 			transition="all 0.2s"
 			cursor="pointer"
+			flex={1}
 		>
 			<Flex
 				mb={1}

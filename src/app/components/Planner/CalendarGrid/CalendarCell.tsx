@@ -1,4 +1,4 @@
-import { Box, Button } from '@chakra-ui/react';
+import { Box, BoxProps, Button } from '@chakra-ui/react';
 import { ReactNode } from 'react';
 
 interface CalendarCellProps {
@@ -6,13 +6,15 @@ interface CalendarCellProps {
 	showSeeAll?: boolean;
 	bg?: string;
 	borderColor?: string;
+	style?: BoxProps;
 }
 
 export const CalendarCell = ({
 	children,
 	showSeeAll,
 	bg = 'transparent',
-	borderColor = 'brandNeutralOutline'
+	borderColor = 'brandNeutralOutline',
+	style
 }: CalendarCellProps) => {
 	return (
 		<Box
@@ -22,11 +24,10 @@ export const CalendarCell = ({
 			borderBottomWidth="1px"
 			borderColor={borderColor}
 			bg={bg}
-			p={1}
 			position="relative"
 			display="flex"
-			flexDirection="column"
 			gap={1}
+			{...style}
 		>
 			{children}
 
