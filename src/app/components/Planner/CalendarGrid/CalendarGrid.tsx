@@ -106,21 +106,16 @@ export const CalendarGrid = () => {
 							{/* Grid Rows */}
 
 							{/* Room Cells for this Time */}
-							{Array.from({ length: PLANNER_TIME_SLOTS.length * 4 }).map((_, index) => {
-								const headingIndex = Math.floor(index / PLANNER_TIME_SLOTS.length);
-								console.log('headingIndex', headingIndex);
-								const room = PLANNER_ROOMS[headingIndex];
-								console.log('roomIndex', room);
-								const timeSlotIndex = index % PLANNER_TIME_SLOTS.length;
-								console.log('timeSlotIndex', timeSlotIndex);
+							{Array.from({ length: PLANNER_TIME_SLOTS.length * PLANNER_ROOMS.length }).map((_, index) => {
+								const roomIndex = index % PLANNER_ROOMS.length;
+								const timeSlotIndex = Math.floor(index / PLANNER_ROOMS.length);
+								const room = PLANNER_ROOMS[roomIndex];
 								const timeSlot = PLANNER_TIME_SLOTS[timeSlotIndex];
-								console.log('timeSlot', timeSlot);
 								const events = getEventsForSlot(room.id, timeSlot.time);
 
-								console.log('events', events);
 								return (
 									<CalendarCell
-										key={index}
+										key={`${room.id}-${timeSlot.time}`}
 										style={
 											{
 												// gridColumn: timeSlotIndex === index ? `${timeSlotIndex + 2} / span 1` : undefined

@@ -13,7 +13,12 @@ export const PLANNER_TIME_SLOTS: TTimeSlot[] = [
 	{ time: '12:00' },
 	{ time: '12:30' },
 	{ time: '13:00' },
-	{ time: '13:30' }
+	{ time: '13:30' },
+	{ time: '14:00' },
+	{ time: '14:30' },
+	{ time: '15:00' },
+	{ time: '15:30' },
+	{ time: '16:00' }
 ];
 
 export const PLANNER_EVENTS: TEvent[] = [
