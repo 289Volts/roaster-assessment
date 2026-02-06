@@ -1,7 +1,8 @@
-import { Box, Button, Flex, Stack, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Flex, HStack, Stack, Text, VStack } from '@chakra-ui/react';
 import { LuChevronDown, LuPlus } from 'react-icons/lu';
 import { CalendarGrid } from './CalendarGrid';
 import { DateNavigation } from './DateNavigation';
+import { Roster } from './Roster';
 import { SubHeader } from './SubHeader';
 
 export const Planner = () => {
@@ -70,17 +71,30 @@ export const Planner = () => {
 				<SubHeader />
 
 				{/* Navigation */}
-				<DateNavigation />
 
-				{/* Content */}
-				<Box
-					flex={1}
-					borderBottomRightRadius="0"
-					borderBottomLeftRadius="0"
+				<HStack
+					gap={5}
 					w="full"
+					align="start"
 				>
-					<CalendarGrid />
-				</Box>
+					<Roster />
+					<VStack
+						gap={5}
+						w="full"
+					>
+						<DateNavigation />
+
+						{/* Content */}
+						<Box
+							flex={1}
+							borderBottomRightRadius="0"
+							borderBottomLeftRadius="0"
+							w="full"
+						>
+							<CalendarGrid />
+						</Box>
+					</VStack>
+				</HStack>
 			</VStack>
 		</Stack>
 	);
