@@ -6,6 +6,10 @@ interface CalendarCellProps {
 	showSeeAll?: boolean;
 	bg?: string;
 	borderColor?: string;
+	borderLeft?: boolean;
+	borderRight?: boolean;
+	borderTop?: boolean;
+	borderBottom?: boolean;
 	style?: BoxProps;
 }
 
@@ -14,14 +18,20 @@ export const CalendarCell = ({
 	showSeeAll,
 	bg = 'transparent',
 	borderColor = 'brandNeutralOutline',
+	borderLeft = false,
+	borderRight = false,
+	borderTop = false,
+	borderBottom = false,
 	style
 }: CalendarCellProps) => {
 	return (
 		<Box
 			w="full"
 			h="full"
-			borderRightWidth="1px"
-			borderBottomWidth="1px"
+			borderLeftWidth={borderLeft ? '1px' : '0'}
+			borderRightWidth={borderRight ? '1px' : '0'}
+			borderTopWidth={borderTop ? '1px' : '0'}
+			borderBottomWidth={borderBottom ? '1px' : '0'}
 			borderColor={borderColor}
 			bg={bg}
 			position="relative"

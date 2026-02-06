@@ -11,8 +11,8 @@ export interface EventCardProps {
 export const EventCard = ({ title, timeRange, assignee, initials, color }: EventCardProps) => {
 	return (
 		<Box
-			borderLeftWidth="4px"
-			borderLeftColor={`${color}.400`}
+			borderWidth="1px"
+			borderColor={`${color}.400`}
 			bg={`${color}.50`}
 			p={2}
 			rounded="sm"
