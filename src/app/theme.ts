@@ -21,6 +21,9 @@ const config = defineConfig({
 				brandGrey: { value: '#5D636F' },
 				brandMainBorder: { value: '#E2E4E9' },
 				brandSurfaceLight: { value: '#F3F5F7' }
+				// eventBorderOrage: { value: '#E35F00' },
+				// eventBorderGreen: { value: '#19C34C' },
+				// eventBorderLemon: { value: '#A19712' }
 			}
 		}
 	}

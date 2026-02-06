@@ -1,4 +1,9 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+'use client';
+import { usePlannerView } from '@/context/PlannerViewContext';
+import { TEvent } from '@/lib/planner/types';
+import { Box, Button, Flex, Popover, Portal, Text } from '@chakra-ui/react';
+import { useState } from 'react';
+import { EventPopover } from './EventPopover';
 
 export interface EventCardProps {
 	title: string;
@@ -6,75 +11,139 @@ export interface EventCardProps {
 	assignee: string;
 	initials: string;
 	color: string; // e.g. "orange", "green"
+	events?: TEvent[];
+	date?: string;
 }
 
-export const EventCard = ({ title, timeRange, assignee, initials, color }: EventCardProps) => {
-	return (
-		<Box
-			borderLeftWidth="4px"
-			borderLeftColor={`${color}.400`}
-			bg={`${color}.50`}
-			p={2}
-			rounded="sm"
-			shadow="sm"
-			h="full"
-			w="full"
-			minH="80px"
-			overflow="hidden"
-			_hover={{ shadow: 'md' }}
-			transition="all 0.2s"
-			cursor="pointer"
-			flex={1}
-		>
-			<Flex
-				mb={1}
-				justify="space-between"
-			>
-				<Flex
-					bg="white"
-					w={6}
-					h={6}
-					rounded="full"
-					align="center"
-					justify="center"
-					borderWidth="1px"
-					borderColor={`${color}.200`}
-				>
-					<Text
-						fontSize="2xs"
-						color={`${color}.600`}
-						fontWeight="bold"
-					>
-						{initials}
-					</Text>
-				</Flex>
-			</Flex>
+export const EventCard = ({
+	title,
+	timeRange,
+	assignee,
+	initials,
+	color,
+	events = [],
+	date = 'Wednesday 31'
+}: EventCardProps) => {
+	const { setView } = usePlannerView();
+	const [isOpen, setIsOpen] = useState(false);
 
-			<Text
-				fontWeight="bold"
-				fontSize="sm"
-				lineHeight="shorter"
-				mb={0.5}
-				color="brandBlack"
-				truncate
+	return (
+		<>
+			<Popover.Root
+				open={isOpen}
+				onOpenChange={(state) => setIsOpen(state.open)}
+				// lazyMount
+				positioning={{ placement: 'right' }}
 			>
-				{title}
-			</Text>
-			<Text
-				fontSize="xs"
-				color="gray.500"
-				mb={1}
+				<Portal>
+					<Popover.Positioner>
+						<Popover.Content
+							w="auto"
+							bg="transparent"
+							shadow="none"
+							border="none"
+							_focus={{ outline: 'none' }}
+						>
+							<EventPopover
+								date={date}
+								events={events}
+							/>
+						</Popover.Content>
+					</Popover.Positioner>
+				</Portal>
+			</Popover.Root>
+			<Box
+				borderLeftWidth="4px"
+				borderLeftColor={`${color}.400`}
+				bg={`${color}.50`}
+				borderWidth="1px"
+				borderColor={`${color}.200`}
+				borderLeftStyle="solid"
+				p={2}
+				rounded="sm"
+				shadow="sm"
+				h="full"
+				w="full"
+				minH="80px"
+				_hover={{ shadow: 'md' }}
+				transition="all 0.2s"
+				cursor="pointer"
+				flex={1}
+				role="group"
+				position="relative"
 			>
-				{timeRange}
-			</Text>
-			<Text
-				fontSize="xs"
-				color={`${color}.600`}
-				fontWeight="medium"
-				truncate
-			>
-				{assignee}
-			</Text>
-		</Box>
+				<Button
+					variant="ghost"
+					position="absolute"
+					left={'104%'}
+					bg="brandNeutralLight"
+					color="brandNeutralGrey"
+					rounded="6px"
+					h="7.1875rem"
+					w="6.062rem"
+					top="50%"
+					transform="translateY(-50%)"
+					zIndex={5}
+					_groupHover={{ display: 'inline-flex' }}
+					onClick={(e) => {
+						e.stopPropagation();
+						setIsOpen(true);
+						setView('live');
+					}}
+					aria-label="See all events for day"
+				>
+					See all
+				</Button>
+				<Flex
+					mb={1}
+					justify="space-between"
+				>
+					<Flex
+						bg="white"
+						w={6}
+						h={6}
+						rounded="full"
+						align="center"
+						justify="center"
+						borderWidth="1px"
+						borderColor={`${color}.200`}
+					>
+						<Text
+							fontSize="2xs"
+							color={`${color}.600`}
+							fontWeight="bold"
+						>
+							{initials}
+						</Text>
+					</Flex>
+				</Flex>
+
+				<Text
+					fontWeight="bold"
+					fontSize="sm"
+					lineHeight="shorter"
+					mb={0.5}
+					color="brandBlack"
+					truncate
+				>
+					{title}
+				</Text>
+				<Text
+					fontSize="xs"
+					color="gray.500"
+					mb={1}
+				>
+					{timeRange}
+				</Text>
+				<Text
+					fontSize="xs"
+					color={`${color}.600`}
+					fontWeight="medium"
+					truncate
+				>
+					{assignee}
+				</Text>
+			</Box>
+		</>
 	);
 };

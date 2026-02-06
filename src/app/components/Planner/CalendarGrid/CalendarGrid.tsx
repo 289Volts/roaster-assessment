@@ -7,9 +7,56 @@ import { ColumnHeader } from './ColumnHeader';
 export const CalendarGrid = () => {
 	const ROW_HEIGHT = 120;
 
-	const getEventsForSlot = (roomId: string, time: string) => {
-		return PLANNER_EVENTS.filter((e) => e.columnId === roomId && e.startTime === time);
+	const getSlotIndex = (time: string) => {
+		return PLANNER_TIME_SLOTS.findIndex((slot) => slot.time === time);
 	};
+
+	const getEventRowSpan = (startTime: string, endTime: string) => {
+		const startIndex = getSlotIndex(startTime);
+		const endIndex = getSlotIndex(endTime);
+
+		if (startIndex === -1) {
+			return { startRow: 2, rowSpan: 1 };
+		}
+
+		const resolvedEndIndex = endIndex === -1 ? PLANNER_TIME_SLOTS.length : endIndex;
+		const span = Math.max(resolvedEndIndex - startIndex, 1);
+
+		return { startRow: startIndex + 2, rowSpan: span };
+	};
+
+	const eventsByRoom = PLANNER_EVENTS.reduce(
+		(acc, event) => {
+			if (!acc[event.columnId]) acc[event.columnId] = [];
+			acc[event.columnId].push(event);
+			return acc;
+		},
+		{} as Record<string, typeof PLANNER_EVENTS>
+	);
+
+	const eventGridColumns: Record<string, string> = {};
+
+	PLANNER_ROOMS.forEach((room, roomIndex) => {
+		const eventsInRoom = eventsByRoom[room.id] || [];
+		const sortedEvents = [...eventsInRoom].sort((a, b) => a.startTime.localeCompare(b.startTime));
+		const numEvents = sortedEvents.length;
+		if (numEvents === 0) return;
+
+		const totalColumns = 4;
+		const baseSpan = Math.floor(totalColumns / numEvents);
+		const remainder = totalColumns % numEvents;
+		const spans: number[] = [];
+		for (let i = 0; i < numEvents; i++) {
+			spans.push(baseSpan + (i < remainder ? 1 : 0));
+		}
+
+		let currentCol = roomIndex * 4 + 1;
+		sortedEvents.forEach((event, i) => {
+			const span = spans[i];
+			eventGridColumns[event.id] = `${currentCol} / span ${span}`;
+			currentCol += span;
+		});
+	});
 
 	return (
 		<Flex
@@ -28,13 +75,11 @@ export const CalendarGrid = () => {
 			<ScrollArea.Root height="calc(100dvh - 19.3125rem)">
 				<ScrollArea.Viewport>
 					<ScrollArea.Content
-						// paddingEnd="3"
 						textStyle="sm"
 						display="flex"
 						flexDirection="row"
 					>
 						{/* Time Cell */}
-
 						<VStack
 							border="none"
 							gap={0}
@@ -74,7 +119,6 @@ export const CalendarGrid = () => {
 										zIndex={10}
 										display="flex"
 										alignItems="flex-start"
-										// justifyContent="center"
 										pt={2}
 									>
 										{slot.time}
@@ -85,11 +129,12 @@ export const CalendarGrid = () => {
 
 						{/* Calendar Grid */}
 						<Grid
-							templateColumns={`repeat(${PLANNER_ROOMS.length}, minmax(240px, 1fr))`}
+							templateColumns={`repeat(${(240 * PLANNER_ROOMS.length) / 60}, ${240 / PLANNER_ROOMS.length}px)`}
 							templateRows={`44px repeat(${PLANNER_TIME_SLOTS.length}, ${ROW_HEIGHT}px)`}
 							width="max-content"
 							minWidth={0}
 							flex={1}
+							position="relative"
 						>
 							{/* Headers */}
 							{PLANNER_ROOMS.map((room) => (
@@ -98,48 +143,68 @@ export const CalendarGrid = () => {
 									position="sticky"
 									top={0}
 									zIndex={20}
+									gridColumn="span 4"
 								>
 									<ColumnHeader label={room.name} />
 								</Box>
 							))}
 
-							{/* Grid Rows */}
+							{/* Background Cells */}
+							{(() => {
+								const COLUMNS = (240 * PLANNER_ROOMS.length) / 60;
+								const totalCells = COLUMNS * PLANNER_TIME_SLOTS.length;
 
-							{/* Room Cells for this Time */}
-							{Array.from({ length: PLANNER_TIME_SLOTS.length * PLANNER_ROOMS.length }).map((_, index) => {
-								const roomIndex = index % PLANNER_ROOMS.length;
-								const timeSlotIndex = Math.floor(index / PLANNER_ROOMS.length);
-								const room = PLANNER_ROOMS[roomIndex];
-								const timeSlot = PLANNER_TIME_SLOTS[timeSlotIndex];
-								const events = getEventsForSlot(room.id, timeSlot.time);
+								return Array.from({ length: totalCells }).map((_, index) => {
+									const colIndex = index % COLUMNS;
+									const timeSlotIndex = Math.floor(index / COLUMNS);
+									const roomIndex = Math.floor(colIndex / 4); // each room spans 4 columns
+									const room = PLANNER_ROOMS[roomIndex];
+									const timeSlot = PLANNER_TIME_SLOTS[timeSlotIndex];
+
+									const isFirstInRoom = colIndex % 4 === 0;
+									const isLastInRoom = colIndex % 4 === 3;
+
+									return (
+										<CalendarCell
+											key={`${room.id}-${timeSlot.time}-${colIndex}`}
+											borderLeft={isFirstInRoom}
+											borderRight={isLastInRoom}
+											borderTop={true}
+											borderBottom={true}
+										/>
+									);
+								});
+							})()}
+
+							{/* Events (spanning rows) */}
+							{PLANNER_EVENTS.map((event) => {
+								const roomIndex = PLANNER_ROOMS.findIndex((room) => room.id === event.columnId);
+								const { startRow, rowSpan } = getEventRowSpan(event.startTime, event.endTime);
+
+								if (roomIndex === -1) {
+									return null;
+								}
+
+								// Get all events for this column (room)
+								const columnEvents = PLANNER_EVENTS.filter((e) => e.columnId === event.columnId);
 
 								return (
-									<CalendarCell
-										key={`${room.id}-${timeSlot.time}`}
-										style={
-											{
-												// gridColumn: timeSlotIndex === index ? `${timeSlotIndex + 2} / span 1` : undefined
-											}
-										}
-										// key={`${room.id}-${slot.time}`}
-										// showSeeAll={events.length > 2}
+									<Box
+										key={event.id}
+										gridColumn={eventGridColumns[event.id]}
+										gridRow={`${startRow} / span ${rowSpan}`}
+										zIndex={5}
 									>
-										{events.map((event) => (
-											<Box
-												w="full"
-												key={event.id}
-												// h={events.length > 1 ? '48%' : 'full'}
-											>
-												<EventCard
-													title={event.title}
-													assignee={event.assignee}
-													initials={event.initials}
-													timeRange={`${event.startTime} - ${event.endTime}`}
-													color={event.color}
-												/>
-											</Box>
-										))}
-									</CalendarCell>
+										<EventCard
+											title={event.title}
+											assignee={event.assignee}
+											initials={event.initials}
+											timeRange={`${event.startTime} - ${event.endTime}`}
+											color={event.color}
+											events={columnEvents}
+											date="Wednesday 31"
+										/>
+									</Box>
 								);
 							})}
 						</Grid>

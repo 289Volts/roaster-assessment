@@ -26,7 +26,7 @@ export const PLANNER_EVENTS: TEvent[] = [
 		id: '1',
 		title: 'Surgery',
 		startTime: '11:00',
-		endTime: '13:30',
+		endTime: '12:30',
 		assignee: 'Haico de Gast',
 		initials: 'HG',
 		type: 'surgery',
@@ -37,11 +37,12 @@ export const PLANNER_EVENTS: TEvent[] = [
 		id: '2',
 		title: 'Pijnspecialist',
 		startTime: '11:00',
-		endTime: '12:00',
+		endTime: '13:30',
 		assignee: 'Diane Lane',
 		initials: 'DL',
 		type: 'consultation',
 		color: 'green',
+
 		columnId: 'room1'
 	},
 	{
