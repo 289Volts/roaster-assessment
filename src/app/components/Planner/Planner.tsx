@@ -1,7 +1,7 @@
 'use client';
 import { usePlannerView } from '@/context/PlannerViewContext';
+import { Box, Button, Center, Flex, HStack, ScrollArea, Spinner, Stack, Text, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { Box, Button, Flex, HStack, ScrollArea, Stack, Text, VStack, Spinner, Center } from '@chakra-ui/react';
 import { LuChevronDown, LuPlus } from 'react-icons/lu';
 import { CalendarGrid } from './CalendarGrid';
 import { DateNavigation } from './DateNavigation';
@@ -19,9 +19,19 @@ export const Planner = () => {
 
 	if (isLoading) {
 		return (
-			<Center w="full" h="full" p={8}>
-				<VStack gap={4} align="center">
-					<Spinner size="lg" color="brandSecondary" />
+			<Center
+				w="full"
+				h="full"
+				p={8}
+			>
+				<VStack
+					gap={4}
+					align="center"
+				>
+					<Spinner
+						size="lg"
+						color="brandSecondary"
+					/>
 					<Text color="brandNeutralGrey">Loading planner…</Text>
 				</VStack>
 			</Center>
