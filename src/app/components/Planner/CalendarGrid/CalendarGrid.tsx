@@ -145,7 +145,9 @@ export const CalendarGrid = () => {
 									zIndex={20}
 									gridColumn="span 4"
 								>
-									<ColumnHeader label={room.name} />
+									<ColumnHeader
+										label={room.name}
+									/>
 								</Box>
 							))}
 
@@ -171,6 +173,8 @@ export const CalendarGrid = () => {
 											borderRight={isLastInRoom}
 											borderTop={true}
 											borderBottom={true}
+											showSeeAll={true}
+											events={eventsByRoom[room.id] || []}
 										/>
 									);
 								});
