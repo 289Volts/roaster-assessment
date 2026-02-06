@@ -1,3 +1,5 @@
+'use client';
+import { usePlannerView } from '@/context/PlannerViewContext';
 import { Box, Button, Flex, HStack, ScrollArea, Stack, Text, VStack } from '@chakra-ui/react';
 import { LuChevronDown, LuPlus } from 'react-icons/lu';
 import { CalendarGrid } from './CalendarGrid';
@@ -6,6 +8,7 @@ import { Roster } from './Roster';
 import { SubHeader } from './SubHeader';
 
 export const Planner = () => {
+	const { view } = usePlannerView();
 	return (
 		<Stack
 			gap={5}
@@ -77,7 +80,8 @@ export const Planner = () => {
 					w="full"
 					align="start"
 				>
-					<Roster />
+					{/** Show roster only when view is 'live' */}
+					{view === 'live' ? <Roster /> : null}
 					<ScrollArea.Root
 						height="calc(100vh - 100px)"
 						mt={5}
