@@ -9,6 +9,7 @@ import {
 	HStack,
 	Icon,
 	Input,
+	ScrollArea,
 	Separator,
 	Stack,
 	Tabs,
@@ -30,11 +31,11 @@ const ROSTER_DATA = [
 		dateRange: 'Jan 8 - Jan 15',
 		status: 'On leave',
 		availability: [
-			{ day: 'm', status: 'available' },
-			{ day: 'di', status: 'available' },
-			{ day: 'w', status: 'available' },
-			{ day: 'do', status: 'busy' },
-			{ day: 'vr', status: 'busy' }
+			{ day: 'm', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'di', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'w', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'do', status: 'busy', color: '#F55300', bg: '#FFEFE7' },
+			{ day: 'vr', status: 'busy', color: '#F55300', bg: '#FFEFE7' }
 		]
 	},
 	{
@@ -46,11 +47,11 @@ const ROSTER_DATA = [
 		dateRange: 'Jan 12 - Jan 28',
 		status: 'On leave',
 		availability: [
-			{ day: 'm', status: 'available' },
-			{ day: 'di', status: 'available' },
-			{ day: 'w', status: 'available' },
-			{ day: 'do', status: 'busy' },
-			{ day: 'vr', status: 'busy' }
+			{ day: 'm', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'di', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'w', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'do', status: 'busy', color: '#F55300', bg: '#FFEFE7' },
+			{ day: 'vr', status: 'busy', color: '#F55300', bg: '#FFEFE7' }
 		]
 	},
 	{
@@ -62,11 +63,11 @@ const ROSTER_DATA = [
 		dateRange: 'Jan 12 - Jan 20',
 		status: 'On leave',
 		availability: [
-			{ day: 'm', status: 'available' },
-			{ day: 'di', status: 'available' },
-			{ day: 'w', status: 'available' },
-			{ day: 'do', status: 'busy' },
-			{ day: 'vr', status: 'busy' }
+			{ day: 'm', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'di', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'w', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'do', status: 'busy', color: '#F55300', bg: '#FFEFE7' },
+			{ day: 'vr', status: 'busy', color: '#F55300', bg: '#FFEFE7' }
 		]
 	},
 	{
@@ -78,46 +79,33 @@ const ROSTER_DATA = [
 		dateRange: 'Jan 2 - Jan 9',
 		status: 'On leave',
 		availability: [
-			{ day: 'm', status: 'available' },
-			{ day: 'di', status: 'available' },
-			{ day: 'w', status: 'available' },
-			{ day: 'do', status: 'busy' },
-			{ day: 'vr', status: 'busy' }
+			{ day: 'm', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'di', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'w', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'do', status: 'busy', color: '#F55300', bg: '#FFEFE7' },
+			{ day: 'vr', status: 'busy', color: '#F55300', bg: '#FFEFE7' }
 		]
 	}
 ];
 
-const AvailabilityDot = ({ status, label }: { status: string; label: string }) => {
-	const getColor = (s: string) => {
-		if (s === 'available') return 'green.500'; // Green
-		if (s === 'busy') return 'orange.400'; // Orange
-		return 'gray.300';
-	};
-
-	const getBg = (s: string) => {
-		if (s === 'available') return 'green.50';
-		if (s === 'busy') return 'orange.50';
-		return 'gray.50';
-	};
-
+const AvailabilityDot = ({ label, color, bg }: { status: string; label: string; color?: string; bg?: string }) => {
 	return (
-		<VStack gap={0.5}>
+		<Flex
+			w="18px"
+			h="18px"
+			borderRadius="full"
+			justify="center"
+			align="center"
+			bg={bg}
+		>
 			<Text
-				fontSize="xs"
-				color="brandNeutralGrey"
+				fontSize="2xs"
+				color={color}
 				fontWeight="medium"
 			>
 				{label}
 			</Text>
-			<Box
-				w="8px"
-				h="8px"
-				borderRadius="full"
-				bg={status === 'busy' ? 'transparent' : 'green.400'}
-				borderColor={status === 'busy' ? 'orange.400' : 'green.400'}
-				borderWidth={status === 'busy' ? '2px' : '0px'}
-			/>
-		</VStack>
+		</Flex>
 	);
 };
 
@@ -127,7 +115,7 @@ const RosterCard = ({ item }: { item: (typeof ROSTER_DATA)[0] }) => {
 			borderWidth="1px"
 			borderColor="brandNeutralOutline"
 			borderRadius="xl"
-			p={4}
+			p="2"
 			bg="white"
 			w="full"
 		>
@@ -136,99 +124,99 @@ const RosterCard = ({ item }: { item: (typeof ROSTER_DATA)[0] }) => {
 				<Flex
 					justify="space-between"
 					align="flex-start"
+					gap={2.5}
 				>
-					<HStack gap={3}>
-						<Avatar.Root
-							size="lg"
-							variant="subtle"
-							bg="brandNeutralLight"
+					<Avatar.Root
+						boxSize="10"
+						variant="subtle"
+						bg="brandNeutralLight"
+						color="brandBlack"
+					>
+						<Avatar.Fallback name={item.name}>{item.initials || undefined}</Avatar.Fallback>
+					</Avatar.Root>
+					<VStack alignItems="start">
+						<Text
+							fontWeight="semibold"
+							fontSize="sm"
 							color="brandBlack"
 						>
-							<Avatar.Fallback name={item.name}>{item.initials || undefined}</Avatar.Fallback>
-						</Avatar.Root>
-						<VStack
-							align="flex-start"
-							gap={0}
+							{item.name}
+						</Text>
+						<Flex
+							wrap="wrap"
+							gapX={1}
+							gapY={1.5}
+							align="center"
 						>
-							<Text
-								fontWeight="bold"
-								fontSize="lg"
-								color="brandBlack"
+							<Badge
+								variant="subtle"
+								bg="brandNeutralLight"
+								color="brandNeutralGrey"
+								px={1.5}
+								py={1}
+								borderRadius="md"
+								fontWeight="medium"
+								fontSize="2xs"
 							>
-								{item.name}
-							</Text>
-						</VStack>
-					</HStack>
-					<Badge
-						colorPalette="red"
-						variant="subtle"
-						bg="brandErrorLight"
-						color="brandError"
-						px={2}
-						py={1}
-						borderRadius="full"
-						size="sm"
-					>
-						● On leave
-					</Badge>
-				</Flex>
+								{item.hours}
+							</Badge>
+							<Badge
+								variant="subtle"
+								bg="brandNeutralLight"
+								color="brandNeutralGrey"
+								px={1.5}
+								py={1}
+								borderRadius="md"
+								fontWeight="medium"
+								fontSize="2xs"
+							>
+								{item.overtime}
+							</Badge>
+							<Badge
+								variant="subtle"
+								bg="brandErrorLight"
+								color="brandError"
+								px={1.5}
+								py={1}
+								borderRadius="md"
+								fontWeight="medium"
+								fontSize="2xs"
+							>
+								{item.dateRange}
+							</Badge>
+						</Flex>
+					</VStack>
 
-				{/* Stats Row */}
-				<Flex
-					wrap="wrap"
-					gap={2}
-					align="center"
-				>
-					<Badge
-						variant="subtle"
-						bg="brandNeutralLight"
-						color="brandNeutralGrey"
-						px={2}
-						py={1}
-						borderRadius="md"
-						fontWeight="normal"
+					<VStack
+						align="flex-end"
+						w="max-content"
+						gap={2}
+						mt={2}
 					>
-						{item.hours}
-					</Badge>
-					<Badge
-						variant="subtle"
-						bg="brandNeutralLight"
-						color="brandNeutralGrey"
-						px={2}
-						py={1}
-						borderRadius="md"
-						fontWeight="normal"
-					>
-						{item.overtime}
-					</Badge>
-					<Badge
-						variant="subtle"
-						bg="brandErrorLight"
-						color="brandError"
-						px={2}
-						py={1}
-						borderRadius="md"
-						fontWeight="normal"
-					>
-						{item.dateRange}
-					</Badge>
-				</Flex>
-
-				{/* Availability Row */}
-				<Flex
-					justify="flex-end"
-					w="full"
-					mt={1}
-				>
-					<HStack gap={3}>
-						{item.availability.map((day, idx) => (
-							<AvailabilityDot
-								key={idx}
-								status={day.status}
-								label={day.day}
-							/>
-						))}
-					</HStack>
+						<Badge
+							colorPalette="red"
+							variant="subtle"
+							bg="brandErrorLight"
+							color="brandError"
+							px={2}
+							py={1}
+							borderRadius="full"
+							size="sm"
+						>
+							● On leave
+						</Badge>
+						<HStack gap={1}>
+							{item.availability.map((day, idx) => (
+								<AvailabilityDot
+									key={idx}
+									status={day.status}
+									label={day.day}
+									color={day.color}
+									bg={day.bg}
+								/>
+							))}
+						</HStack>
+					</VStack>
 				</Flex>
 			</Stack>
 		</Box>
@@ -377,32 +365,25 @@ export const Roster = () => {
 				</Tabs.Root>
 
 				{/* List */}
-				<VStack
-					mt={5}
-					gap={4}
-					overflowY="auto"
-					maxH="calc(100vh - 250px)" // Adjust based on viewport
-					align="stretch"
-					css={{
-						'&::-webkit-scrollbar': {
-							width: '4px'
-						},
-						'&::-webkit-scrollbar-track': {
-							width: '6px'
-						},
-						'&::-webkit-scrollbar-thumb': {
-							background: '#E2E4E9',
-							borderRadius: '24px'
-						}
-					}}
-				>
-					{ROSTER_DATA.map((item, idx) => (
-						<RosterCard
-							key={item.id + idx}
-							item={item}
-						/>
-					))}
-				</VStack>
+				<ScrollArea.Root height="calc(100vh - 250px)">
+					<ScrollArea.Viewport>
+						<ScrollArea.Content textStyle="sm">
+							<VStack
+								mt={5}
+								gap={4}
+								align="stretch"
+							>
+								{ROSTER_DATA.map((item, idx) => (
+									<RosterCard
+										key={item.id + idx}
+										item={item}
+									/>
+								))}
+							</VStack>
+						</ScrollArea.Content>
+					</ScrollArea.Viewport>
+					<ScrollArea.Scrollbar />
+				</ScrollArea.Root>
 			</VStack>
 		</Box>
 	);
