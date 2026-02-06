@@ -79,3 +79,70 @@ export const PLANNER_EVENTS: TEvent[] = [
 		columnId: 'finance'
 	}
 ];
+
+export const ROSTER_DATA = [
+	{
+		id: 1,
+		name: 'Elijah Oyin',
+		initials: 'EO',
+		hours: '1158.0hrs',
+		overtime: '38.0hrs',
+		dateRange: 'Jan 8 - Jan 15',
+		status: 'On leave',
+		availability: [
+			{ day: 'm', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'di', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'w', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'do', status: 'busy', color: '#F55300', bg: '#FFEFE7' },
+			{ day: 'vr', status: 'busy', color: '#F55300', bg: '#FFEFE7' }
+		]
+	},
+	{
+		id: 2,
+		name: 'Diane Lane',
+		initials: '',
+		hours: '1158.0hrs',
+		overtime: '38.0hrs',
+		dateRange: 'Jan 12 - Jan 28',
+		status: 'On leave',
+		availability: [
+			{ day: 'm', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'di', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'w', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'do', status: 'busy', color: '#F55300', bg: '#FFEFE7' },
+			{ day: 'vr', status: 'busy', color: '#F55300', bg: '#FFEFE7' }
+		]
+	},
+	{
+		id: 3,
+		name: 'Elijah Oyin', // Duplicate name in image
+		initials: 'EO',
+		hours: '1158.0hrs',
+		overtime: '38.0hrs',
+		dateRange: 'Jan 12 - Jan 20',
+		status: 'On leave',
+		availability: [
+			{ day: 'm', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'di', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'w', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'do', status: 'busy', color: '#F55300', bg: '#FFEFE7' },
+			{ day: 'vr', status: 'busy', color: '#F55300', bg: '#FFEFE7' }
+		]
+	},
+	{
+		id: 4,
+		name: 'Haico De Gast',
+		initials: '',
+		hours: '1158.0hrs',
+		overtime: '38.0hrs',
+		dateRange: 'Jan 2 - Jan 9',
+		status: 'On leave',
+		availability: [
+			{ day: 'm', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'di', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'w', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
+			{ day: 'do', status: 'busy', color: '#F55300', bg: '#FFEFE7' },
+			{ day: 'vr', status: 'busy', color: '#F55300', bg: '#FFEFE7' }
+		]
+	}
+];

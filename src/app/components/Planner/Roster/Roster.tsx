@@ -1,5 +1,6 @@
 'use client';
 
+import { ROSTER_DATA } from '@/lib/planner/constants';
 import {
 	Avatar,
 	Badge,
@@ -19,74 +20,6 @@ import {
 import { Maximize4, SearchNormal1 } from 'iconsax-reactjs';
 import { useState } from 'react';
 import { HiOutlineFilter } from 'react-icons/hi';
-
-// Mock Data matching the image
-const ROSTER_DATA = [
-	{
-		id: 1,
-		name: 'Elijah Oyin',
-		initials: 'EO',
-		hours: '1158.0hrs',
-		overtime: '38.0hrs',
-		dateRange: 'Jan 8 - Jan 15',
-		status: 'On leave',
-		availability: [
-			{ day: 'm', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
-			{ day: 'di', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
-			{ day: 'w', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
-			{ day: 'do', status: 'busy', color: '#F55300', bg: '#FFEFE7' },
-			{ day: 'vr', status: 'busy', color: '#F55300', bg: '#FFEFE7' }
-		]
-	},
-	{
-		id: 2,
-		name: 'Diane Lane',
-		initials: '', // Empty to test fallback or no avatar
-		hours: '1158.0hrs',
-		overtime: '38.0hrs',
-		dateRange: 'Jan 12 - Jan 28',
-		status: 'On leave',
-		availability: [
-			{ day: 'm', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
-			{ day: 'di', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
-			{ day: 'w', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
-			{ day: 'do', status: 'busy', color: '#F55300', bg: '#FFEFE7' },
-			{ day: 'vr', status: 'busy', color: '#F55300', bg: '#FFEFE7' }
-		]
-	},
-	{
-		id: 3,
-		name: 'Elijah Oyin', // Duplicate name in image
-		initials: 'EO',
-		hours: '1158.0hrs',
-		overtime: '38.0hrs',
-		dateRange: 'Jan 12 - Jan 20',
-		status: 'On leave',
-		availability: [
-			{ day: 'm', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
-			{ day: 'di', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
-			{ day: 'w', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
-			{ day: 'do', status: 'busy', color: '#F55300', bg: '#FFEFE7' },
-			{ day: 'vr', status: 'busy', color: '#F55300', bg: '#FFEFE7' }
-		]
-	},
-	{
-		id: 4,
-		name: 'Haico De Gast',
-		initials: '',
-		hours: '1158.0hrs',
-		overtime: '38.0hrs',
-		dateRange: 'Jan 2 - Jan 9',
-		status: 'On leave',
-		availability: [
-			{ day: 'm', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
-			{ day: 'di', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
-			{ day: 'w', status: 'available', color: '#37A55C', bg: '#EBFFEF' },
-			{ day: 'do', status: 'busy', color: '#F55300', bg: '#FFEFE7' },
-			{ day: 'vr', status: 'busy', color: '#F55300', bg: '#FFEFE7' }
-		]
-	}
-];
 
 const AvailabilityDot = ({ label, color, bg }: { status: string; label: string; color?: string; bg?: string }) => {
 	return (
@@ -110,6 +43,7 @@ const AvailabilityDot = ({ label, color, bg }: { status: string; label: string; 
 };
 
 const RosterCard = ({ item }: { item: (typeof ROSTER_DATA)[0] }) => {
+	console.log('item', item);
 	return (
 		<Box
 			borderWidth="1px"
@@ -126,14 +60,18 @@ const RosterCard = ({ item }: { item: (typeof ROSTER_DATA)[0] }) => {
 					align="flex-start"
 					gap={2.5}
 				>
-					<Avatar.Root
-						boxSize="10"
-						variant="subtle"
-						bg="brandNeutralLight"
-						color="brandBlack"
-					>
-						<Avatar.Fallback name={item.name}>{item.initials || undefined}</Avatar.Fallback>
-					</Avatar.Root>
+					{item.initials ? (
+						<Avatar.Root
+							boxSize="10"
+							variant="subtle"
+							bg="brandNeutralLight"
+							color="brandBlack"
+						>
+							<Avatar.Fallback name={item.name}>{item.initials || undefined}</Avatar.Fallback>
+						</Avatar.Root>
+					) : (
+						<Box boxSize="10" />
+					)}
 					<VStack alignItems="start">
 						<Text
 							fontWeight="semibold"
@@ -330,7 +268,6 @@ export const Roster = () => {
 					<Tabs.List>
 						{tabs.map((tab, i) => {
 							const isActive = activeTab === tab.name;
-							console.log('activeTab', activeTab, tab.name, isActive);
 							return (
 								<Tabs.Trigger
 									value={tab.name}
@@ -359,31 +296,33 @@ export const Roster = () => {
 							);
 						})}
 					</Tabs.List>
-					<Tabs.Content value="tab-1">Tab 1: Content</Tabs.Content>
-					<Tabs.Content value="tab-2">Tab 2: Content</Tabs.Content>
-					<Tabs.Content value="tab-3">Tab 3: Content</Tabs.Content>
+					<Tabs.Content value={tabs[0].name}>Tab 1: Content</Tabs.Content>
+					<Tabs.Content value={tabs[1].name}>Tab 2: Content</Tabs.Content>
+					<Tabs.Content value={tabs[2].name}>
+						{' '}
+						<ScrollArea.Root height="calc(100vh - 490px)">
+							<ScrollArea.Viewport>
+								<ScrollArea.Content textStyle="sm">
+									<VStack
+										mt={5}
+										gap={4}
+										align="stretch"
+									>
+										{ROSTER_DATA.map((item, idx) => (
+											<RosterCard
+												key={item.id + idx}
+												item={item}
+											/>
+										))}
+									</VStack>
+								</ScrollArea.Content>
+							</ScrollArea.Viewport>
+							<ScrollArea.Scrollbar />
+						</ScrollArea.Root>
+					</Tabs.Content>
 				</Tabs.Root>
 
 				{/* List */}
-				<ScrollArea.Root height="calc(100vh - 250px)">
-					<ScrollArea.Viewport>
-						<ScrollArea.Content textStyle="sm">
-							<VStack
-								mt={5}
-								gap={4}
-								align="stretch"
-							>
-								{ROSTER_DATA.map((item, idx) => (
-									<RosterCard
-										key={item.id + idx}
-										item={item}
-									/>
-								))}
-							</VStack>
-						</ScrollArea.Content>
-					</ScrollArea.Viewport>
-					<ScrollArea.Scrollbar />
-				</ScrollArea.Root>
 			</VStack>
 		</Box>
 	);
