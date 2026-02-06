@@ -7,6 +7,8 @@ import { ColumnHeader } from './ColumnHeader';
 export const CalendarGrid = () => {
 	const ROW_HEIGHT = 120;
 
+	const COLUMNS = (240 * PLANNER_ROOMS.length) / 60;
+
 	const getSlotIndex = (time: string) => {
 		return PLANNER_TIME_SLOTS.findIndex((slot) => slot.time === time);
 	};
@@ -151,7 +153,6 @@ export const CalendarGrid = () => {
 
 							{/* Background Cells */}
 							{(() => {
-								const COLUMNS = (240 * PLANNER_ROOMS.length) / 60;
 								const totalCells = COLUMNS * PLANNER_TIME_SLOTS.length;
 
 								return Array.from({ length: totalCells }).map((_, index) => {
@@ -203,6 +204,14 @@ export const CalendarGrid = () => {
 											color={event.color}
 											events={columnEvents}
 											date="Wednesday 31"
+											seeAllPlacement={(function () {
+												const pos = eventGridColumns[event.id] || '';
+												const start = parseInt(pos.split('/')[0], 10) || 1;
+												const spanMatch = pos.match(/span\s+(\d+)/);
+												const span = spanMatch ? parseInt(spanMatch[1], 10) : 1;
+												const end = start + span - 1;
+												return end === COLUMNS ? 'left' : 'right';
+											})()}
 										/>
 									</Box>
 								);

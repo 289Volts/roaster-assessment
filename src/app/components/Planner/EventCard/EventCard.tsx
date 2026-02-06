@@ -13,6 +13,7 @@ export interface EventCardProps {
 	color: string; // e.g. "orange", "green"
 	events?: TEvent[];
 	date?: string;
+	seeAllPlacement?: 'left' | 'right';
 }
 
 export const EventCard = ({
@@ -22,7 +23,8 @@ export const EventCard = ({
 	initials,
 	color,
 	events = [],
-	date = 'Wednesday 31'
+	date = 'Wednesday 31',
+	seeAllPlacement = 'right'
 }: EventCardProps) => {
 	const { setView } = usePlannerView();
 	const [isOpen, setIsOpen] = useState(false);
@@ -75,7 +77,8 @@ export const EventCard = ({
 				<Button
 					variant="ghost"
 					position="absolute"
-					left={'104%'}
+					left={seeAllPlacement === 'right' ? '104%' : undefined}
+					right={seeAllPlacement === 'left' ? '104%' : undefined}
 					bg="brandNeutralLight"
 					color="brandNeutralGrey"
 					rounded="6px"
@@ -84,11 +87,9 @@ export const EventCard = ({
 					top="50%"
 					transform="translateY(-50%)"
 					zIndex={5}
-					_groupHover={{ display: 'inline-flex' }}
 					onClick={(e) => {
 						e.stopPropagation();
 						setIsOpen(true);
-						setView('live');
 					}}
 					aria-label="See all events for day"
 				>
